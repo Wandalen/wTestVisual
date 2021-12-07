@@ -1,4 +1,4 @@
-( function _Int_test_s_()
+( function _VisualInt_test_s_()
 {
 
 'use strict';
