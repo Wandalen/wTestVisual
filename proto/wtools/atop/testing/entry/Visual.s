@@ -1,4 +1,4 @@
-( function _Main_s_()
+( function _Visual_s_()
 {
 
 'use strict';
@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  require( '../include/Top.s' );
+  require( '../include/VisualTop.s' );
 }
 
 if( typeof module !== 'undefined' )

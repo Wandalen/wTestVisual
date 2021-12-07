@@ -1,4 +1,4 @@
-( function _Puppeteer_s_()
+( function _BrowserStack_s_()
 {
 
 'use strict';

@@ -1,4 +1,4 @@
-( function _IncludeTop_s_()
+( function _VisualTop_s_()
 {
 
 'use strict';
@@ -11,13 +11,13 @@ if( typeof module !== 'undefined' )
 
   //
 
-  require( './Base.s' );
-  require( '../l1/Namespace.s' );
+  require( './VisualBase.s' );
+  require( '../l1/VisualNamespace.s' );
 
   require( '../l2/Puppeteer.s' );
   require( '../l2/BrowserStack.s' );
 
-  require( '../l3/AssetFor.s' );
+  require( '../l3/VisualAssetFor.s' );
 
 }
 
