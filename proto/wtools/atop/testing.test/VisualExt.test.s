@@ -1,4 +1,4 @@
-( function _Ext_test_s_( )
+( function _VisualExt_test_s_( )
 {
 
 'use strict';
