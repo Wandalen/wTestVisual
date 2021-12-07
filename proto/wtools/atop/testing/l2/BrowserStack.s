@@ -59,7 +59,7 @@ function sessionStatusSet( o )
   _.assert( _.strDefined( o.sessionStopUri ) && _.strDefined( o.sessionApiUri ) );
 
   let data = o.onStatusForm( o );
-  _.assert( _.strDefined( data.status ) && _.strDefined( data.reason ) );
+  _.assert( _.strIs( data.status ) && _.strIs( data.reason ) );
 
   let opts = { json : true, username : o.user, password: o.key  };
 

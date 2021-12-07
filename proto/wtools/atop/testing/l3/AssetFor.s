@@ -14,35 +14,37 @@ function assetFor( o )
 {
   let test = o.test;
 
-  _.assert( arguments.length === 2 );
+  _.assert( arguments.length === 1 );
   _.assert( _.routine.is( test.assetFor ), 'Test descriptor should have assetFor function implemented.' );
 
   let a = test.assetFor({ assetName : o.assetName, routinePath: o.routinePath });
 
   a.browserDimensions  = o.browserDimensions;
-  a.browserstackEnabled = o.browserstackEnabled;
-  a.browserstackUser = o.browserstackUser;
-  a.browserstackKey = o.browserstackKey;
+  a.browserStackEnabled = o.browserStackEnabled;
+  a.browserStackUser = o.browserStackUser;
+  a.browserStackAccessKey = o.browserStackAccessKey;
   a.browserStackIdleTimeoutInSec = o.browserStackIdleTimeoutInSec;
-  a.browserstackConfigs = o.browserstackConfigs;
+  a.browserStackConfigs = o.browserStackConfigs;
 
   a.inBrowser = inBrowser;
   a.abs = abs;
   a.memoryUsedGb = memoryUsedGb;
   
   a.onAct = onAct;
-  a.onBrowserStackConfigsGenerate = onBrowserStackConfigsGenerate;
+  a.onbrowserStackConfigsGenerate = onbrowserStackConfigsGenerate;
   a.onRunOnBrowserStack = onRunOnBrowserStack;
   a.onActOptionsForm = onActOptionsForm;
   a.onPageHandlerRegister = onPageHandlerRegister;
   a.onBrowserStackSessionChanged = onBrowserStackSessionChanged;
   a.onPageLoad = onPageLoad;
 
+  return a;
+
   //
 
   function onRunOnBrowserStack() 
   {
-    const { desktop, mobile } = this.onBrowserStackConfigsGenerate();
+    const { desktop, mobile } = this.onbrowserStackConfigsGenerate();
     let ready = _.Consequence().take( null );
 
     desktop.forEach( ( c ) => 
@@ -69,12 +71,12 @@ function assetFor( o )
 
   //
 
-  function onBrowserStackConfigsGenerate() 
+  function onbrowserStackConfigsGenerate() 
   {
     const desktop = [];
     const mobile = [];
 
-    _.array.as( this.browserstackConfigs ).forEach( ( src ) => 
+    _.array.as( this.browserStackConfigs ).forEach( ( src ) => 
     {
       const splits = _.strSplitNonPreserving
       ({ 
@@ -102,7 +104,7 @@ function assetFor( o )
         const config = 
         {
           user : this.browserStackUser,
-          key : this.browserstackKey,
+          key : this.browserStackAccessKey,
 
           capabilities,
           
@@ -126,7 +128,7 @@ function assetFor( o )
           os_version,
 
           'browserstack.username': this.browserStackUser,
-          'browserstack.accessKey': this.browserstackKey,
+          'browserstack.accessKey': this.browserStackAccessKey,
           'browserstack.idleTimeout' : this.browserStackIdleTimeoutInSec,
           'browserstack.local': 'true',
         }
@@ -141,8 +143,8 @@ function assetFor( o )
 
   function onActOptionsForm( strategy, remoteConfig, mobile )
   {
-    strategy = strategy || 'Puppeteer';
-    mobile = mobile || false;
+    strategy = strategy ? strategy : 'Puppeteer';
+    mobile = mobile ? mobile : false;
     remoteConfig = remoteConfig ? remoteConfig : null;
     let system = _global_.wTools.puppet.System({ strategy });
     system.form();
@@ -159,7 +161,7 @@ function assetFor( o )
 
   //
 
-  function onBrowserStackSessionChanged( sid )
+  async function onBrowserStackSessionChanged( sid )
   {
   }
 
@@ -189,7 +191,7 @@ function assetFor( o )
       {
         const sessionDetails = await this.page.sessionDetailsGet();
         const sid = JSON.parse( sessionDetails )[ "hashed_id" ];
-        this.onBrowserStackSessionChanged( sid );
+        await this.onBrowserStackSessionChanged( sid );
       }
 
       await this.onPageLoad();
@@ -243,7 +245,7 @@ function assetFor( o )
 
   //
 
-  async function inBrowser ( routine ) 
+  function inBrowser ( routine ) 
   { 
     this.act = routine;
     if( this.browserStackEnabled ) return this.onRunOnBrowserStack();
@@ -291,11 +293,11 @@ assetFor.defaults =
 
   browserDimensions : null,
   
-  browserstackEnabled : null,
-  browserstackUser : null,
-  browserstackKey : null,
+  browserStackEnabled : null,
+  browserStackUser : null,
+  browserStackAccessKey : null,
   browserStackIdleTimeoutInSec : null,
-  browserstackConfigs : null,
+  browserStackConfigs : null,
 }
 
 //

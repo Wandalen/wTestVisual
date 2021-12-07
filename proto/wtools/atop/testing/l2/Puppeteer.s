@@ -28,7 +28,7 @@ function chromiumDownload()
   ready.then( ( localRevisions ) =>
   {
     if( _.longHas( localRevisions, targetRevision ) )
-    return targetRevision;
+    return null;
     return _.Consequence.From( browserFetcher.download( targetRevision ) ).then( () => targetRevision );
   })
 
