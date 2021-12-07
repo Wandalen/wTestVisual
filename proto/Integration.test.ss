@@ -494,8 +494,6 @@ const Proto =
   routineTimeOut : 1500000,
   silencing : 0,
 
-  enabled : 0,
-
   onSuiteBegin,
   onSuiteEnd,
   context :

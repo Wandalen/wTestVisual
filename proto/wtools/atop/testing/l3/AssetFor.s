@@ -29,7 +29,7 @@ function assetFor( o )
   a.inBrowser = inBrowser;
   a.abs = abs;
   a.memoryUsedGb = memoryUsedGb;
-  
+
   a.onAct = onAct;
   a.onbrowserStackConfigsGenerate = onbrowserStackConfigsGenerate;
   a.onRunOnBrowserStack = onRunOnBrowserStack;
@@ -42,12 +42,12 @@ function assetFor( o )
 
   //
 
-  function onRunOnBrowserStack() 
+  function onRunOnBrowserStack()
   {
     const { desktop, mobile } = this.onbrowserStackConfigsGenerate();
     let ready = _.Consequence().take( null );
 
-    desktop.forEach( ( c ) => 
+    desktop.forEach( ( c ) =>
     {
       const testGroup = `${c.os} ${c.os_version} ${c.browser} ${c.browser_version}`;
       const o = this.onActOptionsForm( 'Puppeteer', c );
@@ -56,7 +56,7 @@ function assetFor( o )
       ready.tap( () => test.close( testGroup ) );
     })
 
-    mobile.forEach( ( c ) => {   
+    mobile.forEach( ( c ) => {
 
       const { deviceName } = c.capabilities[ 'bstack:options' ];
       const testGroup = `${deviceName}`;
@@ -71,25 +71,25 @@ function assetFor( o )
 
   //
 
-  function onbrowserStackConfigsGenerate() 
+  function onbrowserStackConfigsGenerate()
   {
     const desktop = [];
     const mobile = [];
 
-    _.array.as( this.browserStackConfigs ).forEach( ( src ) => 
+    _.array.as( this.browserStackConfigs ).forEach( ( src ) =>
     {
       const splits = _.strSplitNonPreserving
-      ({ 
-        src, 
-        delimeter : [ ',', '-' ] 
+      ({
+        src,
+        delimeter : [ ',', '-' ]
       });
 
-      if( splits.length === 1 ) 
+      if( splits.length === 1 )
       {
         const [ deviceName ] = splits;
-        const capabilities = 
+        const capabilities =
         {
-          'bstack:options' : 
+          'bstack:options' :
           {
             "projectName" : "Mobile",
             "buildName" : _.path.name( _.path.dir( test.suite.suiteFilePath ) ),
@@ -101,27 +101,27 @@ function assetFor( o )
             "consoleLogs" : "verbose",
           }
         }
-        const config = 
+        const config =
         {
           user : this.browserStackUser,
           key : this.browserStackAccessKey,
 
           capabilities,
-          
+
           logLevel : 'error',
           host: 'hub-cloud.browserstack.com',
         }
         mobile.push( config );
       }
-      else 
+      else
       {
         const [ os, os_version, browser, browser_version ] = splits;
-        const config = 
-        { 
+        const config =
+        {
           project: os,
           build: _.path.name( _.path.dir( test.suite.suiteFilePath ) ),
           name: test.name,
-          
+
           browser,
           browser_version,
           os,
@@ -149,7 +149,7 @@ function assetFor( o )
     let system = _global_.wTools.puppet.System({ strategy });
     system.form();
     let browser = remoteConfig ? 'browserstack' : null;
-    let puppetOptions = 
+    let puppetOptions =
     {
       dimensions: this.browserDimensions,
       system,
@@ -174,20 +174,20 @@ function assetFor( o )
 
   //
 
-  async function onAct( o ) 
+  async function onAct( o )
   {
     o = o || this.onActOptionsForm();
 
     this.mobile = o.mobile;
 
-    try 
+    try
     {
       this.browser = await _global_.wTools.puppet.windowOpen( o.puppetOptions );
       this.page = await this.browser.pageOpen();
 
       this.onPageHandlerRegister();
 
-      if( this.browserStackEnabled ) 
+      if( this.browserStackEnabled )
       {
         const sessionDetails = await this.page.sessionDetailsGet();
         const sid = JSON.parse( sessionDetails )[ "hashed_id" ];
@@ -203,11 +203,11 @@ function assetFor( o )
       await this.browser.close();
 
     }
-    catch ( err ) 
+    catch ( err )
     {
       _.errAttend( err );
 
-      if( this.browser ) 
+      if( this.browser )
       {
         await this.browser.close();
       }
@@ -220,24 +220,24 @@ function assetFor( o )
 
   //
 
-  function onPageHandlerRegister() 
+  function onPageHandlerRegister()
   {
     if( this.tro.verbosity < 5 )
     return;
 
-    this.page.on( 'console', async ( msg ) => 
+    this.page.on( 'console', async ( msg ) =>
     {
       const logger = console;
       let args = await Promise.all( msg.args().map( ( arg ) => arg.jsonValue() ) );
       logger.log( ... args );
     });
 
-    this.page.on( 'requestfailed', ( request ) => 
+    this.page.on( 'requestfailed', ( request ) =>
     {
       console.log( _.errBrief( `Failed to load: ${request.url()} ${request.failure().errorText}` ) );
     });
 
-    this.page.on( 'pageerror', ( err ) => 
+    this.page.on( 'pageerror', ( err ) =>
     {
       _.errLogOnce( `Page error: ${err.toString()}` );
     });
@@ -245,8 +245,8 @@ function assetFor( o )
 
   //
 
-  function inBrowser ( routine ) 
-  { 
+  function inBrowser ( routine )
+  {
     this.act = routine;
     if( this.browserStackEnabled ) return this.onRunOnBrowserStack();
     return this.onAct();
@@ -285,14 +285,14 @@ function assetFor( o )
 
 }
 
-assetFor.defaults = 
+assetFor.defaults =
 {
   test : null,
   assetName : null,
   routinePath : null,
 
   browserDimensions : null,
-  
+
   browserStackEnabled : null,
   browserStackUser : null,
   browserStackAccessKey : null,
