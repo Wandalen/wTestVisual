@@ -509,14 +509,11 @@ submodule:
   wFiles:
     path: 'npm:///wFiles'
     enabled: 0
-  typescript:
-    path: 'npm:///typescript!4.3.5'
+  browserstack-local:
+    path: 'npm:///browserstack-local#1.4.8'
     enabled: 0
-  ts-node:
-    path: 'npm:///ts-node!10.2.0'
-    enabled: 0
-  types/node:
-    path: 'npm:///@types/node!16.6.0'
+  needle:
+    path: 'npm:///needle#2.9.1'
     enabled: 0
   wEventHandler:
     path: 'npm:///wEventHandler'
@@ -525,21 +522,6 @@ submodule:
       optional: 1
   wstarter:
     path: 'npm:///wstarter'
-    enabled: 0
-    criterion:
-      development: 1
-  spectron:
-    path: 'npm:///spectron!13.0.0'
-    enabled: 0
-    criterion:
-      development: 1
-  puppeteer:
-    path: 'npm:///puppeteer!5.5.0'
-    enabled: 0
-    criterion:
-      development: 1
-  electron:
-    path: 'npm:///electron!11.5.0'
     enabled: 0
     criterion:
       development: 1
