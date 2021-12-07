@@ -81,7 +81,7 @@ function sessionStatusSet( o )
   function onSessionStopDefault( o )
   {
     let stopReady = _.Consequence();
-    Needle.post( o.sessionStopUri, {}, opts, ( err, resp, ) => 
+    Needle.post( o.sessionStopUri, {}, opts, ( err, resp, ) =>
     {
       if( err )
       stopReady.error( __.err( `Failed to stop BrowserStack session ${o.sid}. \nErr:${err}, \nResponse:${resp}` ) )
@@ -94,7 +94,7 @@ function sessionStatusSet( o )
   function onSessionStatusDefault( o )
   {
     let putReady = _.Consequence();
-    Needle.put( o.sessionApiUri, data, opts, ( err, resp ) => 
+    Needle.put( o.sessionApiUri, data, opts, ( err, resp ) =>
     {
       if( resp && resp.statusMessage === 'OK' )
       putReady.take( resp );
@@ -105,7 +105,7 @@ function sessionStatusSet( o )
   }
 }
 
-sessionStatusSet.defaults = 
+sessionStatusSet.defaults =
 {
   sid : null,
   tro : null,
