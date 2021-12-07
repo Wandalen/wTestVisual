@@ -39,6 +39,7 @@
     "url": "https://github.com/Wandalen/wTestVisual/issues"
   },
   "dependencies": {
+    "browserstack-local": "1.4.8",
     "wConsequence": "alpha",
     "wCopyable": "alpha",
     "wequaler": "alpha",

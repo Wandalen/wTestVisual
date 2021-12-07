@@ -7,6 +7,9 @@ const _global = _global_;
 const _ = _global_.wTools;
 _.test = _.test || Object.create( null );
 _.test.visual = _.test.visual || Object.create( null );
+_.test.visual.puppeteer = _.test.visual.puppeteer || Object.create( null );
+
+let Puppeteer, PuppeteerRevisions;
 
 // --
 // UI Testing
@@ -376,6 +379,8 @@ let Extension =
   isVisibleWithinViewport
 
 }
+
+//
 
 Object.assign( _.test.visual, Extension );
 

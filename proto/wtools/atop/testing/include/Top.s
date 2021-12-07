@@ -7,11 +7,15 @@
 
 if( typeof module !== 'undefined' )
 {
-  const _ = _global_.wTools;
+  const _ = require( 'Tools' );
 
   //
 
   require( './Base.s' );
+  require( '../l1/Namespace.s' );
+  
+  require( '../l2/Puppeteer.s' );
+  require( '../l2/BrowserStack.s' );
 
 }
 
