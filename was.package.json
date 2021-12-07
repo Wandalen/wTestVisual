@@ -1,0 +1,70 @@
+{
+  "name": "wtestvisual",
+  "version": "1.0.575",
+  "engine": "node >= 10.0.0",
+  "description": "Framework for convenient visual testing. Extends Testing.",
+  "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
+  "contributors": [
+    {
+      "name": "Kostiantyn Wandalen",
+      "email": "wandalen@obox.systems"
+    },
+    {
+      "name": "Volodymyr M.",
+      "email": "volodymyr.migdal@gmail.com"
+    },
+    {
+      "name": "Dmytro Kryvoruchko",
+      "email": "dm.vict.kr@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "main": "proto/node_modules/wTestVisual",
+  "files": [
+    "proto/wtools/atop/testing",
+    "proto/wtools/abase/l0/l0",
+    "out",
+    "proto/node_modules",
+    "proto/node_modules/Tools",
+    "proto/node_modules/wTestVisual"
+  ],
+  "scripts": {
+    "test": "tst .run 'proto/**' rapidity:-1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wTestVisual.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wandalen/wTestVisual/issues"
+  },
+  "dependencies": {
+    "wTools": "",
+    "wselector": "",
+    "wProto": "",
+    "wprocesswatcher": "",
+    "wprocess": "",
+    "wlooker": "",
+    "wLogger": "",
+    "wintrospectorextra": "",
+    "winstancing": "",
+    "wFiles": "",
+    "wequaler": "",
+    "wCopyable": "",
+    "wConsequence": "",
+    "wpuppet": ""
+  },
+  "optionalDependencies": {
+    "wEventHandler": ""
+  },
+  "devDependencies": {
+    "wTesting": "",
+    "wstarter": ""
+  },
+  "keywords": [
+    "testing",
+    "unit test",
+    "functional test",
+    "wTools"
+  ]
+}
