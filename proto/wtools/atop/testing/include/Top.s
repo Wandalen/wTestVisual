@@ -13,9 +13,11 @@ if( typeof module !== 'undefined' )
 
   require( './Base.s' );
   require( '../l1/Namespace.s' );
-  
+
   require( '../l2/Puppeteer.s' );
   require( '../l2/BrowserStack.s' );
+
+  require( '../l3/AssetFor.s' );
 
 }
 

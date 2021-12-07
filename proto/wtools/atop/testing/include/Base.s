@@ -44,6 +44,8 @@ if( typeof module !== 'undefined' )
   _.include( 'wStringsExtra' );
   _.include( 'wCommandsAggregator' );
 
+  _.include( 'wPuppet' );
+
   // _.includeFirst( 'wScriptLauncher' );
 
   // _.assert( !_realGlobal_.wTester || !_realGlobal_.wTester._isReal_, 'wTester is already included' );

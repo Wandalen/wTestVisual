@@ -53,7 +53,8 @@
     "wCopyable": "",
     "wConsequence": "",
     "wpuppet": "",
-    "browserstack-local": "1.4.8"
+    "browserstack-local": "1.4.8",
+    "needle": "2.9.1"
   },
   "optionalDependencies": {
     "wEventHandler": ""
