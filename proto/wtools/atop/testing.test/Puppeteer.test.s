@@ -29,7 +29,7 @@ function onSuiteBegin()
 
   self.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..'  ), 'TestVisual' );
   self.assetsOriginalPath = _.path.join( __dirname, '_asset' );
-  self.appJsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../../../../node_modules/wtesting/proto/wtools/atop/testing/entry/Exec' ) );
+  self.appJsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), require.resolve( 'wTesting' ), '../../proto/wtools/atop/testing/entry/Exec' ) );
   self.toolsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), 'Tools' ) );
   self.puppeteerPath = require.resolve( 'puppeteer' );
 }
