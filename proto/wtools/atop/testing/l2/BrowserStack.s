@@ -84,7 +84,7 @@ function sessionStatusSet( o )
     Needle.post( o.sessionStopUri, {}, opts, ( err, resp, ) =>
     {
       if( err )
-      stopReady.error( __.err( `Failed to stop BrowserStack session ${o.sid}. \nErr:${err}, \nResponse:${resp}` ) )
+      stopReady.error( _.err( `Failed to stop BrowserStack session ${o.sid}. \nErr:${err}, \nResponse:${resp}` ) )
       else
       stopReady.take( resp )
     })
@@ -99,7 +99,7 @@ function sessionStatusSet( o )
       if( resp && resp.statusMessage === 'OK' )
       putReady.take( resp );
       else
-      putReady.error( __.err( `Failed to set status of BrowserStack session ${o.sid}. \nErr:${err}, \nResponse:${resp}` ) )
+      putReady.error( _.err( `Failed to set status of BrowserStack session ${o.sid}. \nErr:${err}, \nResponse:${resp}` ) )
     });
     return putReady;
   }
