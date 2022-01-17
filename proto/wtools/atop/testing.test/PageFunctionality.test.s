@@ -20,22 +20,24 @@ async function evaluate ( test )
   let a = context.assetFor( test );
   a.entryPath = 'trivial/Setup.html';
 
-  return a.inBrowser( async ( page ) => 
+  return a.inBrowser( async ( page ) =>
   {
     let got = await page.evaluate( () => true );
     test.identical( got, true );
   });
 }
 
+evaluate.timeOut = 60000;
+
 //
 
-let Suite = 
+let Suite =
 {
   name : 'Tools.TestVisual.PageFunctionality',
 
   silencing : 1,
 
-  tests : 
+  tests :
   {
     evaluate
   }

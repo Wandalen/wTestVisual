@@ -56,10 +56,10 @@ async function bsBegin ()
 {
   let self = this;
 
-  if( !self.browserStackEnabled )
+  if( !self.remoteTesting )
   return false;
 
-  self.bsLocal = await _.test.visual.browserstack.localBegin( self.browserStackAccessKey )
+  self.bsLocal = await _.test.visual.browserstack.localBegin( process.env.BROWSERSTACK_KEY );
   return null;
 
 }
@@ -70,7 +70,7 @@ function bsEnd ()
 {
   let self = this;
 
-  if( !self.browserStackEnabled )
+  if( !self.remoteTesting )
   return false;
   return _.test.visual.browserstack.localEnd( self.bsLocal );
 }
@@ -220,14 +220,13 @@ let Suite =
 
   context: 
   {
-    port: null,
-    app: null,
+    port : null,
+    app : null,
     server: null,
 
-    suiteTempPath: null,
-    assetsPath: null,
+    suiteTempPath : null,
 
-    remoteTesting : false,
+    remoteTesting : true,
 
     remoteConfig : 
     [
