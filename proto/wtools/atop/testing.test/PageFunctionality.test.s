@@ -1,4 +1,4 @@
-( function _Mobile_test_s_()
+( function _PageFunctionality_test_s_()
 {
 
 'use strict';
@@ -14,7 +14,7 @@ _.assert( !!Parent );
 
 //
 
-async function trivial ( test ) 
+async function evaluate ( test ) 
 {
   let context = this;
   let a = context.assetFor( test );
@@ -31,13 +31,13 @@ async function trivial ( test )
 
 let Suite = 
 {
-  name : 'Tools.TestVisual.Mobile',
+  name : 'Tools.TestVisual.PageFunctionality',
 
   silencing : 1,
 
   tests : 
   {
-    trivial
+    evaluate
   }
 }
 
