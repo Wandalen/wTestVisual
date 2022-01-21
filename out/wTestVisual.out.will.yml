@@ -196,6 +196,8 @@ module:
           - ../proto/wtools/atop/testing/l3
           - ../proto/wtools/atop/testing/l3/VisualAssetFor.s
           - ../proto/wtools/atop/testing.test
+          - ../proto/wtools/atop/testing.test/Abstract.test.s
+          - ../proto/wtools/atop/testing.test/PageFunctionality.test.s
           - ../proto/wtools/atop/testing.test/Puppeteer.test.s
           - ../proto/wtools/atop/testing.test/VisualExt.test.s
           - ../proto/wtools/atop/testing.test/VisualInt.test.s
@@ -203,6 +205,8 @@ module:
           - ../proto/wtools/atop/testing.test/_asset/puppeteer
           - ../proto/wtools/atop/testing.test/_asset/puppeteer/index.html
           - ../proto/wtools/atop/testing.test/_asset/puppeteer/Puppeteer.test.s
+          - ../proto/wtools/atop/testing.test/_asset/trivial
+          - ../proto/wtools/atop/testing.test/_asset/trivial/Setup.html
     submodule:
       wTools:
         path: 'npm:///wTools'
