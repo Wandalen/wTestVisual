@@ -57,6 +57,7 @@ async function evaluate( test )
     }));
     test.identical( got, 1 );
 
+    /* eslint-disable no-return-await */
     test.case = 'async callback returns another awaited promise';
     var got = await page.evaluate( async () => await new Promise( (resolve, reject ) =>
     {
@@ -70,6 +71,7 @@ async function evaluate( test )
       setTimeout( () => resolve( arg ), 500 );
     }), 1);
     test.identical( got, 1 );
+    /* eslint-enable no-return-await */
 
     /* - */
 
@@ -77,7 +79,7 @@ async function evaluate( test )
     return;
 
     test.case = 'callback returns another awaited promise';
-    return test.shouldThrowErrorAsync( () => page.evaluate( () => { throw 'Err' } ));
+    return test.shouldThrowErrorAsync( () => page.evaluate( () => { throw Error } ));
   });
 }
 
