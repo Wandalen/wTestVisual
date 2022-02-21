@@ -62,7 +62,7 @@ async function bsBegin ()
   if( _.process.insideTestContainer() )
   return false;
 
-  self.bsLocal = await __.test.visual.browserstack.localBegin( process.env.BROWSERSTACK_KEY );
+  self.bsLocal = await __.test.visual.browserstack.localBegin( process.env.PRIVATE_BROWSERSTACK_KEY );
   return null;
 
 }
@@ -94,8 +94,8 @@ async function bsStatusUpdate( tro )
   return __.test.visual.browserstack.sessionStatusSet
   ({
     sid : context.bsSession,
-    user : process.env.BROWSERSTACK_USER,
-    key : process.env.BROWSERSTACK_KEY,
+    user : process.env.PRIVATE_BROWSERSTACK_USER,
+    key : process.env.PRIVATE_BROWSERSTACK_KEY,
     tro
   })
 }
@@ -166,8 +166,8 @@ function assetFor ( test, assetName )
     routinePath,
     browserDimensions : [ 800, 600 ],
     browserStackEnabled : context.remoteTesting,
-    browserStackUser : process.env.BROWSERSTACK_USER,
-    browserStackAccessKey : process.env.BROWSERSTACK_KEY,
+    browserStackUser : process.env.PRIVATE_BROWSERSTACK_USER,
+    browserStackAccessKey : process.env.PRIVATE_BROWSERSTACK_KEY,
     browserStackIdleTimeoutInSec : 30,
     browserStackConfigs : context.remoteConfig,
   });
