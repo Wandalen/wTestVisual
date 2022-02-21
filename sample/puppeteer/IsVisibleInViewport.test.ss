@@ -6,6 +6,7 @@ if( typeof module !== 'undefined' )
 {
   let _ = require( 'wTools' );
   _.include( 'wTesting' );
+  _.include( 'wTestVisual' );
 
   var Puppeteer = require( 'puppeteer' );
 }
@@ -50,14 +51,14 @@ async function isVisibleInViewport( test )
   let page = await browser.newPage();
 
   await page.goto( 'file:///' + _.path.nativize( indexHtmlPath ), { waitUntil : 'load' } );
-  await _.test.waitForVisibleInViewport
+  await _.test.visual.waitForVisibleInViewport
   ({
     library : 'puppeteer',
     page,
     timeOut : 5000,
     targetSelector : 'p'
   });
-  var got = await _.test.isVisibleWithinViewport
+  var got = await _.test.visual.isVisibleWithinViewport
   ({
     library : 'puppeteer',
     page,
