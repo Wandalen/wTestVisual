@@ -9,12 +9,13 @@ if( typeof module !== 'undefined' )
 }
 
 const _ = _global_.wTools;
+const __ = _globals_.testing.wTools;
 const Parent = wTests[ 'Tools.TestVisual.Abstract' ];
 _.assert( !!Parent );
 
 //
 
-async function evaluate ( test ) 
+async function evaluate ( test )
 {
   let context = this;
   let a = context.assetFor( test );

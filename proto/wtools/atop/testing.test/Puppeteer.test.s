@@ -32,6 +32,7 @@ function onSuiteBegin()
   self.appJsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), require.resolve( 'wTesting' ), '../../wtools/atop/testing/entry/Exec' ) );
   self.toolsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), 'Tools' ) );
   self.puppeteerPath = require.resolve( 'puppeteer' );
+  self.testVisualPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../testing/entry/Visual.s' ) );
 }
 
 //
@@ -62,6 +63,7 @@ function assetFor( test, asset )
       var read = a.fileProvider.fileRead( r.dst.absolute );
       read = _.strReplace( read, `'wTesting'`, `'${_.strEscape( self.appJsPath )}'` );
       read = _.strReplace( read, `'wTools'`, `'${_.strEscape( self.toolsPath )}'` );
+      read = _.strReplace( read, `require( 'wTestVisual' )`, `require( '${_.strEscape( self.testVisualPath )}' )` );
       read = _.strReplace( read, `require( 'puppeteer' )`, `require( '${_.strEscape( self.puppeteerPath )}' )` );
       a.fileProvider.fileWrite( r.dst.absolute, read );
     });
@@ -334,13 +336,11 @@ function waitForVisibleInViewportThrowing( test )
 
   /* - */
 
-  a.ready
-  .then( () =>
+  a.ready.then( () =>
   {
-    test.case = ''
+    debugger;
     return null;
-  })
-
+  });
   a.appStartNonThrowing({ execPath : `Puppeteer.test.s r:waitForVisibleInViewportThrowing v:7 ` })
   .then( ( got ) =>
   {
@@ -349,7 +349,7 @@ function waitForVisibleInViewportThrowing( test )
     test.identical( _.strCount( got.output, 'waiting for function failed: timeout 1ms exceeded' ), 1 );
     test.identical( _.strCount( got.output, `had zombie process` ), 0 );
     return null;
-  })
+  });
 
   /* - */
 
@@ -442,7 +442,8 @@ const Proto =
     assetsOriginalPath : null,
     appJsPath : null,
     toolsPath : null,
-    puppeteerPath : null
+    puppeteerPath : null,
+    testVisualPath : null,
   },
 
   tests :
