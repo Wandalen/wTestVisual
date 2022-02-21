@@ -59,6 +59,9 @@ async function bsBegin ()
   if( !self.remoteTesting )
   return false;
 
+  if( _.process.insideTestContainer() )
+  return false;
+
   self.bsLocal = await __.test.visual.browserstack.localBegin( process.env.BROWSERSTACK_KEY );
   return null;
 
@@ -72,6 +75,10 @@ function bsEnd ()
 
   if( !self.remoteTesting )
   return false;
+
+  if( _.process.insideTestContainer() )
+  return false;
+
   return __.test.visual.browserstack.localEnd( self.bsLocal );
 }
 
