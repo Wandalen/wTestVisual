@@ -12,6 +12,8 @@ if( typeof module !== 'undefined' )
   //
 
   require( './VisualBase.s' );
+
+  _.assert( _globals_.testing !== undefined, 'Expects utility Testing but no utility included.' );
   require( '../l1/VisualNamespace.s' );
 
   require( '../l2/Puppeteer.s' );
