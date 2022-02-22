@@ -90,6 +90,10 @@ async function bsStatusUpdate( tro )
 
   if( !context.remoteTesting )
   return;
+
+  if( _.process.insideTestContainer() )
+  return;
+
   if( !context.bsSession )
   return
 
@@ -169,7 +173,7 @@ function assetFor( test, assetName )
     assetName,
     routinePath,
     browserDimensions : [ 800, 600 ],
-    browserStackEnabled : context.remoteTesting,
+    browserStackEnabled : context.remoteTesting && !_.process.insideTestContainer(),
     browserStackUser : process.env.PRIVATE_BROWSERSTACK_USER,
     browserStackAccessKey : process.env.PRIVATE_BROWSERSTACK_KEY,
     browserStackIdleTimeoutInSec : 30,
