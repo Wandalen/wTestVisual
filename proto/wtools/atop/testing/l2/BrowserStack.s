@@ -60,7 +60,7 @@ function sessionStatusSet( o )
   let data = o.onStatusForm( o );
   _.assert( _.strIs( data.status ) && _.strIs( data.reason ) );
 
-  let opts = { json : true, username : o.user, password: o.key  };
+  let opts = { json : true, username : o.user, password : o.key };
 
   let stopReady = o.onSessionStop( o );
   let statusReady = o.onSessionStatus( o );
@@ -73,14 +73,15 @@ function sessionStatusSet( o )
   {
     _.assert( _.object.is( o.tro ) );
     let status = o.tro.report.outcome ? 'passed' : 'failed';
-    let reason = !o.tro.report.outcome ? o.tro.report.reason || 'test check failed' : '';
+    // let reason = !o.tro.report.outcome ? o.tro.report.reason || 'test check failed' : '';
+    let reason = o.tro.report.outcome ? '' : o.tro.report.reason || 'test check failed';
     return { status, reason }
   }
 
   function onSessionStopDefault( o )
   {
     let stopReady = _.Consequence();
-    Needle.post( o.sessionStopUri, {}, opts, ( err, resp, ) =>
+    Needle.post( o.sessionStopUri, {}, opts, ( err, resp ) =>
     {
       if( err )
       stopReady.error( _.err( `Failed to stop BrowserStack session ${o.sid}. \nErr:${err}, \nResponse:${resp}` ) )

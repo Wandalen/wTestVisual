@@ -16,9 +16,9 @@ function assetFor( o )
   _.assert( arguments.length === 1 );
   _.assert( _.routine.is( test.assetFor ), 'Test descriptor should have assetFor function implemented.' );
 
-  let a = test.assetFor({ assetName : o.assetName, routinePath: o.routinePath });
+  let a = test.assetFor({ assetName : o.assetName, routinePath : o.routinePath });
 
-  a.browserDimensions  = o.browserDimensions;
+  a.browserDimensions = o.browserDimensions;
   a.browserStackEnabled = o.browserStackEnabled;
   a.browserStackUser = o.browserStackUser;
   a.browserStackAccessKey = o.browserStackAccessKey;
@@ -55,7 +55,8 @@ function assetFor( o )
       ready.tap( () => test.close( testGroup ) );
     })
 
-    mobile.forEach( ( c ) => {
+    mobile.forEach( ( c ) =>
+    {
 
       const { deviceName } = c.capabilities[ 'bstack:options' ];
       const testGroup = `${deviceName}`;
@@ -90,14 +91,14 @@ function assetFor( o )
         {
           'bstack:options' :
           {
-            "projectName" : "Mobile",
-            "buildName" : _.path.name( _.path.dir( test.suite.suiteFilePath ) ),
-            "sessionName" : test.name,
-            "deviceName" : deviceName,
-            "realMobile" : "true",
-            "local" : true,
-            "debug" : "true",
-            "consoleLogs" : "verbose",
+            'projectName' : 'Mobile',
+            'buildName' : _.path.name( _.path.dir( test.suite.suiteFilePath ) ),
+            'sessionName' : test.name,
+            deviceName,
+            'realMobile' : 'true',
+            'local' : true,
+            'debug' : 'true',
+            'consoleLogs' : 'verbose',
           }
         }
         const config =
@@ -108,7 +109,7 @@ function assetFor( o )
           capabilities,
 
           logLevel : 'error',
-          host: 'hub-cloud.browserstack.com',
+          host : 'hub-cloud.browserstack.com',
         }
         mobile.push( config );
       }
@@ -117,19 +118,19 @@ function assetFor( o )
         const [ os, os_version, browser, browser_version ] = splits;
         const config =
         {
-          project: os,
-          build: _.path.name( _.path.dir( test.suite.suiteFilePath ) ),
-          name: test.name,
+          'project' : os,
+          'build' : _.path.name( _.path.dir( test.suite.suiteFilePath ) ),
+          'name' : test.name,
 
           browser,
           browser_version,
           os,
           os_version,
 
-          'browserstack.username': this.browserStackUser,
-          'browserstack.accessKey': this.browserStackAccessKey,
+          'browserstack.username' : this.browserStackUser,
+          'browserstack.accessKey' : this.browserStackAccessKey,
           'browserstack.idleTimeout' : this.browserStackIdleTimeoutInSec,
-          'browserstack.local': 'true',
+          'browserstack.local' : 'true',
         }
         desktop.push( config );
       }
@@ -150,7 +151,7 @@ function assetFor( o )
     let browser = remoteConfig ? 'browserstack' : null;
     let puppetOptions =
     {
-      dimensions: this.browserDimensions,
+      dimensions : this.browserDimensions,
       system,
       remoteConfig,
       browser,
@@ -189,7 +190,7 @@ function assetFor( o )
       if( this.browserStackEnabled )
       {
         const sessionDetails = await this.page.sessionDetailsGet();
-        const sid = JSON.parse( sessionDetails )[ "hashed_id" ];
+        const sid = JSON.parse( sessionDetails )[ 'hashed_id' ];
         await this.onBrowserStackSessionChanged( sid );
       }
 
@@ -202,7 +203,7 @@ function assetFor( o )
       await this.browser.close();
 
     }
-    catch ( err )
+    catch( err )
     {
       _.errAttend( err );
 
@@ -244,16 +245,17 @@ function assetFor( o )
 
   //
 
-  function inBrowser ( routine )
+  function inBrowser( routine )
   {
     this.act = routine;
-    if( this.browserStackEnabled ) return this.onRunOnBrowserStack();
+    if( this.browserStackEnabled )
+    return this.onRunOnBrowserStack();
     return this.onAct();
   }
 
   //
 
-  function abs ( ...args )
+  function abs( ... args )
   {
     const tro = this.tro;
     let routinePath = this.routinePath;
@@ -272,7 +274,7 @@ function assetFor( o )
 
   //
 
-  async function memoryUsedGb ()
+  async function memoryUsedGb()
   {
     return this.page.evaluate( () =>
     {

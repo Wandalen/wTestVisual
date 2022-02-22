@@ -25,7 +25,7 @@ function onSuiteBegin()
 {
   let context = this;
 
-  context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..'  ), 'TestVisual' );
+  context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'TestVisual' );
   context.assetsOriginalPath = _.path.join( __dirname, '_asset' );
   context.appJsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), '../testing/entry/Exec' ) );
 

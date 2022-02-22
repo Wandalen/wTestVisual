@@ -27,7 +27,7 @@ function onSuiteBegin()
 {
   let self = this;
 
-  self.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..'  ), 'TestVisual' );
+  self.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'TestVisual' );
   self.assetsOriginalPath = _.path.join( __dirname, '_asset' );
   self.appJsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), require.resolve( 'wTesting' ), '../../wtools/atop/testing/entry/Exec' ) );
   self.toolsPath = _.path.nativize( _.path.join( _.path.normalize( __dirname ), 'Tools' ) );

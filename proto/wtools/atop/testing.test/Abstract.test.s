@@ -52,7 +52,7 @@ async function onRoutineEnd( tro )
 
 //
 
-async function bsBegin ()
+async function bsBegin()
 {
   let self = this;
 
@@ -69,7 +69,7 @@ async function bsBegin ()
 
 //
 
-function bsEnd ()
+function bsEnd()
 {
   let self = this;
 
@@ -88,8 +88,10 @@ async function bsStatusUpdate( tro )
 {
   let context = this;
 
-  if( !context.remoteTesting ) return;
-  if( !context.bsSession ) return
+  if( !context.remoteTesting )
+  return;
+  if( !context.bsSession )
+  return
 
   return __.test.visual.browserstack.sessionStatusSet
   ({
@@ -106,8 +108,10 @@ async function bsSessionClose()
 {
   let context = this;
 
-  if( !context.browser ) return;
-  if( !context.browser.isConnected() ) return;
+  if( !context.browser )
+  return;
+  if( !context.browser.isConnected() )
+  return;
 
   try
   {
@@ -121,7 +125,7 @@ async function bsSessionClose()
 
 //
 
-function serverStart ()
+function serverStart()
 {
   let context = this;
 
@@ -141,7 +145,7 @@ function serverStart ()
 
 //
 
-function serverStop ()
+function serverStop()
 {
   let context = this;
   let ready = __.Consequence();
@@ -154,7 +158,7 @@ function serverStop ()
 
 //
 
-function assetFor ( test, assetName )
+function assetFor( test, assetName )
 {
   let context = this;
   let routinePath = __.path.join( context.suiteTempPath, test.name );
@@ -204,7 +208,8 @@ function assetFor ( test, assetName )
         // }, { timeout : 30000 });
 
     }
-    catch ( err ) {
+    catch( err )
+    {
 
       //  throw __.err( `Waiting for 'window.ready' state failed:\n`, err );
     }
@@ -216,29 +221,27 @@ function assetFor ( test, assetName )
 let Suite =
 {
   name : 'Tools.TestVisual.Abstract',
-  silencing: 1,
+  silencing : 1,
 
-  abstract: 1,
+  abstract : 1,
 
   onSuiteBegin,
   onSuiteEnd,
 
   onRoutineEnd,
 
-  context:
+  context :
   {
     port : null,
     app : null,
-    server: null,
+    server : null,
 
     suiteTempPath : null,
 
     remoteTesting : true,
 
     remoteConfig :
-    [
-      'Samsung Galaxy S20'
-    ],
+    [ 'Samsung Galaxy S20' ],
 
     bsLocal : null,
     bsSession : null,
