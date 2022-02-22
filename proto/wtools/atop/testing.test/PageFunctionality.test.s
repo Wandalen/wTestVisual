@@ -130,6 +130,48 @@ waitForFunction.timeOut = 60000;
 
 //
 
+function waitForFunction( test )
+{
+  let context = this;
+  let a = context.assetFor( test );
+  a.entryPath = 'trivial/Setup.html';
+
+  return a.inBrowser( async ( page ) =>
+  {
+    test.case = 'callback returns true, no delay';
+    var now = _.time.now();
+    await page.waitForFunction( () => true, { timeout : 10000 } );
+    test.ge( _.time.now() - now, 1 );
+
+    test.case = 'callback returns promise, that resolves before time out';
+    var now = _.time.now();
+    await page.waitForFunction( () => new Promise( ( resolve, reject ) =>
+    {
+      setTimeout( () => resolve( true ), 3000 );
+    }), { timeout : 10000 } );
+    test.ge( _.time.now() - now, 3000 );
+
+    test.case = 'callback returns promise, that resolves before time out';
+    test.shouldThrowErrorAsync( () =>
+    {
+      return page.waitForFunction( () => new Promise( ( resolve, reject ) =>
+      {
+        setTimeout( () => resolve( true ), 3000 );
+      }), { timeout : 1000 } );
+    });
+
+    test.case = 'callback returns false';
+    test.shouldThrowErrorAsync( () =>
+    {
+      return page.waitForFunction( () => false, { timeout : 1000 } );
+    });
+  });
+}
+
+waitForFunction.timeOut = 60000;
+
+//
+
 let Suite =
 {
   name : 'Tools.TestVisual.PageFunctionality',
