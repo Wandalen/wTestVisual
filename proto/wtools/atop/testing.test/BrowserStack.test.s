@@ -1,0 +1,160 @@
+( function _BrowserStack_test_s_()
+{
+
+'use strict';
+
+if( typeof module !== 'undefined' )
+{
+  const _ = require( '../../../node_modules/Tools' );
+  _.include( 'wTesting' );
+  require( '../testing/entry/Visual.s' );
+}
+
+const _global = _global_;
+const _ = _global_.wTools;
+const __ = _globals_.testing.wTools;
+
+//
+
+function onSuiteBegin()
+{
+  let context = this;
+  context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..'  ), 'TestVisual' );
+  context.assetsOriginalPath = _.path.join( __dirname, '_asset' );
+  const testingPath = require.resolve( 'wTesting' );
+  context.appJsPath = _.path.nativize( _.path.join( testingPath, '../../wtools/atop/testing/entry/Exec' ) );
+}
+
+//
+
+function onSuiteEnd()
+{
+  let context = this;
+  _.assert( _.strHas( context.suiteTempPath, 'TestVisual' ) );
+  _.path.tempClose( context.suiteTempPath );
+}
+
+//
+
+function assetFor( test, asset )
+{
+  let context = this;
+  let a = test.assetFor( asset );
+
+  _.assert( _.routineIs( a.program.head ) );
+  _.assert( _.routineIs( a.program.body ) );
+
+  let oprogram = a.program;
+  program_body.defaults = a.program.defaults;
+  a.program = _.routine.uniteCloning_replaceByUnite( a.program.head, program_body );
+  a.reflect = reflect;
+
+  return a;
+
+  /* */
+
+  function program_body( o )
+  {
+    let locals =
+    {
+      toolsPath : _.module.resolve( 'wTools' ),
+    };
+    o.locals = o.locals || locals;
+    _.props.supplement( o.locals, locals );
+    _.props.supplement( o.locals.context, locals.context );
+    let r = oprogram.body.call( a, o );
+    r.filePath = a.path.nativize( r.filePath );
+    return r;
+  }
+
+  function reflect()
+  {
+    let reflected = a.fileProvider.filesReflect
+    ({
+      reflectMap : { [ a.originalAssetPath ] : a.routinePath },
+      onUp,
+      outputFormat : 'record'
+    });
+
+    reflected.forEach( ( r ) =>
+    {
+      if( !_.longHasAny( [ 'js', 's', 'ts' ], r.dst.ext ) )
+      return;
+      var read = a.fileProvider.fileRead( r.dst.absolute );
+      read = _.strReplace( read, `'Abstract.test.s'`, `'${ _.path.join( __dirname, 'Abstract.test.s' ) }'` );
+      a.fileProvider.fileWrite( r.dst.absolute, read );
+    });
+  }
+
+  function onUp( r )
+  {
+    if( !_.strHas( r.dst.relative, '.atest.' ) )
+    return;
+    let relative = _.strReplace( r.dst.relative, '.atest.', '.test.' );
+    r.dst.relative = relative;
+    _.assert( _.strHas( r.dst.absolute, '.test.' ) );
+  }
+}
+
+//
+
+function throwSyncError( test )
+{
+  const context = this;
+  const a = context.assetFor( test, 'browserstack' );
+  a.reflect();
+
+  const remoteTesting = _.process.insideTestContainer && context.remoteTesting ? 1 : 0;
+
+  /* - */
+
+  a.appStartNonThrowing( `.context remoteTesting:${ remoteTesting } .run ./ r:throwSyncError` );
+  a.ready.then( ( op ) =>
+  {
+    test.notIdentical( op.exitCode, 0 );
+    test.identical( _.strCount( op.output, 'Sync error' ), 1 );
+    return null;
+  });
+
+  /* - */
+
+  return a.ready;
+}
+
+throwSyncError.timeOut = 60000;
+
+//
+
+let Suite =
+{
+  name : 'Tools.TestVisual.Browserstack',
+
+  silencing : 1,
+
+  onSuiteBegin,
+  onSuiteEnd,
+
+  context :
+  {
+    assetFor,
+
+    suiteTempPath : null,
+    assetsOriginalPath : null,
+    appJsPath : null,
+
+    remoteTesting : true,
+  },
+
+  tests :
+  {
+    throwSyncError,
+  }
+}
+
+//
+
+const Self = wTestSuite( Suite );
+if( typeof module !== 'undefined' && !module.parent )
+wTester.test( Self.name );
+
+})();
