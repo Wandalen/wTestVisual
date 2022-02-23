@@ -60,7 +60,8 @@
   },
   "devDependencies": {
     "wTesting": "",
-    "wstarter": ""
+    "wstarter": "",
+    "eslint": "7.32.0"
   },
   "keywords": [
     "testing",

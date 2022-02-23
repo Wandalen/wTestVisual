@@ -1,12 +1,12 @@
 
 if( typeof module !== 'undefined' )
-require( '../..' );
+require( 'wtestvisual' );
 
 let _ = _global_.wTools;
 
 //
 let ready = _.test.visual.puppeteer.chromiumDownload();
-ready.then( ( res ) => 
+ready.then( ( res ) =>
 {
   if( res )
   console.log( `Downloaded revision ${res}` );
