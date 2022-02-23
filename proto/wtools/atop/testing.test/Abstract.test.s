@@ -21,7 +21,7 @@ let Express = require( 'express' );
 
 //
 
-async function onSuiteBegin( suite ) 
+async function onSuiteBegin( suite )
 {
   let self = this;
   let suiteDirPath = __.path.dir( suite.suiteFilePath );
@@ -33,7 +33,7 @@ async function onSuiteBegin( suite )
 
 //
 
-async function onSuiteEnd() 
+async function onSuiteEnd()
 {
   let self = this;
   await self.bsEnd();
@@ -43,7 +43,7 @@ async function onSuiteEnd()
 
 //
 
-async function onRoutineEnd( tro ) 
+async function onRoutineEnd( tro )
 {
   let self = this;
   await self.bsStatusUpdate( tro );
@@ -52,21 +52,21 @@ async function onRoutineEnd( tro )
 
 //
 
-async function bsBegin () 
+async function bsBegin ()
 {
   let self = this;
 
   if( !self.remoteTesting )
   return false;
 
-  self.bsLocal = await _.test.visual.browserstack.localBegin( process.env.BROWSERSTACK_KEY );
+  self.bsLocal = await _.test.visual.browserstack.localBegin( process.env.PRIVATE_BROWSERSTACK_KEY );
   return null;
 
 }
 
 //
 
-function bsEnd () 
+function bsEnd ()
 {
   let self = this;
 
@@ -87,10 +87,15 @@ async function bsStatusUpdate( tro )
   return _.test.visual.browserstack.sessionStatusSet
   ({
     sid : context.bsSession,
-    user : process.env.BROWSERSTACK_USER,
-    key : process.env.BROWSERSTACK_KEY,
+    user : process.env.PRIVATE_BROWSERSTACK_USER,
+    key : process.env.PRIVATE_BROWSERSTACK_KEY,
     tro
   })
+  .then( ( responses ) =>
+  {
+    process.send( responses[ 1 ].body.automation_session );
+    return null;
+  });
 }
 
 //
@@ -114,7 +119,7 @@ async function bsSessionClose()
 
 //
 
-function serverStart () 
+function serverStart ()
 {
   let context = this;
 
@@ -134,11 +139,11 @@ function serverStart ()
 
 //
 
-function serverStop () 
+function serverStop ()
 {
   let context = this;
   let ready = __.Consequence();
-  context.server.close( () => 
+  context.server.close( () =>
   {
     ready.take( null )
   });
@@ -147,7 +152,7 @@ function serverStop ()
 
 //
 
-function assetFor ( test, assetName ) 
+function assetFor ( test, assetName )
 {
   let context = this;
   let routinePath = __.path.join( context.suiteTempPath, test.name );
@@ -159,8 +164,8 @@ function assetFor ( test, assetName )
     routinePath,
     browserDimensions : [ 800, 600 ],
     browserStackEnabled : context.remoteTesting,
-    browserStackUser : process.env.BROWSERSTACK_USER,
-    browserStackAccessKey : process.env.BROWSERSTACK_KEY,
+    browserStackUser : process.env.PRIVATE_BROWSERSTACK_USER,
+    browserStackAccessKey : process.env.PRIVATE_BROWSERSTACK_KEY,
     browserStackIdleTimeoutInSec : 30,
     browserStackConfigs : context.remoteConfig,
   });
@@ -173,12 +178,12 @@ function assetFor ( test, assetName )
 
   /* */
 
-  function onBrowserStackSessionChanged( sid ) 
+  function onBrowserStackSessionChanged( sid )
   {
     context.bsSession = sid;
   }
 
-  async function onPageLoad() 
+  async function onPageLoad()
   {
     __.assert( __.strDefined( this.entryPath ) );
     let host = this.mobile ? 'bs-local.com' : 'localhost';
@@ -188,7 +193,7 @@ function assetFor ( test, assetName )
 
   async function onBeforeRoutine()
   {
-    try 
+    try
     {
         // await this.page.waitForFunction( () => {
 
@@ -206,7 +211,7 @@ function assetFor ( test, assetName )
 
 //
 
-let Suite = 
+let Suite =
 {
   name : 'Tools.TestVisual.Abstract',
   silencing: 1,
@@ -218,7 +223,7 @@ let Suite =
 
   onRoutineEnd,
 
-  context: 
+  context:
   {
     port : null,
     app : null,
@@ -228,7 +233,7 @@ let Suite =
 
     remoteTesting : true,
 
-    remoteConfig : 
+    remoteConfig :
     [
       'Samsung Galaxy S20'
     ],
