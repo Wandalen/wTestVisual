@@ -81,7 +81,7 @@ function assetFor( test, asset )
       if( !_.longHasAny( [ 'js', 's', 'ts' ], r.dst.ext ) )
       return;
       var read = a.fileProvider.fileRead( r.dst.absolute );
-      read = _.strReplace( read, `'Abstract.test.s'`, `'${ _.path.join( __dirname, 'Abstract.test.s' ) }'` );
+      read = _.strReplace( read, `Abstract.test.s`, `${ _.path.join( __dirname, 'Abstract.test.s' ) }` );
       a.fileProvider.fileWrite( r.dst.absolute, read );
     });
   }
@@ -104,11 +104,26 @@ function throwSyncError( test )
   const a = context.assetFor( test, 'browserstack' );
   a.reflect();
 
-  const remoteTesting = _.process.insideTestContainer && context.remoteTesting ? 1 : 0;
+  if( _.process.insideTestContainer || !context.remoteTesting )
+  return test.true( true );
 
   /* - */
 
-  a.appStartNonThrowing( `.context remoteTesting:${ remoteTesting } .run ./ r:throwSyncError` );
+  const o =
+  {
+    execPath : `.context remoteTesting:1 .run ./ r:throwSyncError v:7`,
+    outputPiping : 0,
+  };
+  a.appStartNonThrowing( o );
+
+  o.pnd.on( 'message', ( response ) =>
+  {
+
+    test.identical( response.build_name, 'throwSyncError' );
+    test.identical( response.status, 'failed' );
+    test.identical( response.reason, 'throwing error' );
+  });
+
   a.ready.then( ( op ) =>
   {
     test.notIdentical( op.exitCode, 0 );
@@ -121,7 +136,7 @@ function throwSyncError( test )
   return a.ready;
 }
 
-throwSyncError.timeOut = 60000;
+throwSyncError.timeOut = 120000;
 
 //
 

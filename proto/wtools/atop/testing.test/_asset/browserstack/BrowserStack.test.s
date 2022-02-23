@@ -16,8 +16,17 @@ _.assert( !!Parent );
 
 function throwSyncError( test )
 {
-  throw _.error.brief( 'Sync error' );
+  const context = this;
+  const a = context.assetFor( test );
+  a.entryPath = 'trivial/Setup.html';
+
+  return a.inBrowser( async ( page ) =>
+  {
+    throw _.error.brief( 'Sync error' );
+  });
 }
+
+throwSyncError.timeOut = 90000;
 
 //
 
