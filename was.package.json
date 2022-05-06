@@ -1,6 +1,6 @@
 {
   "name": "wtestvisual",
-  "version": "1.0.581",
+  "version": "1.0.582",
   "engine": "node >= 10.0.0",
   "description": "Framework for convenient visual testing. Extends Testing.",
   "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
