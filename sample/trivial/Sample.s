@@ -1,10 +1,24 @@
 
 if( typeof module !== 'undefined' )
-require( 'wtestvisual' );
+{
+  const _ = require( 'wTools' );
+  try
+  {
+    _.include( 'wTesting' );
+    _.include( 'wtestvisual' );
+  }
+  catch( err )
+  {
+    _.error.attend( err );
+    console.log( 'Module Testing does not included.' );
+    return;
+  }
+}
 
-let _ = _global_.wTools;
+let _ = _globals_.testing.wTools;
 
 //
+
 let ready = _.test.visual.puppeteer.chromiumDownload();
 ready.then( ( res ) =>
 {
@@ -14,4 +28,4 @@ ready.then( ( res ) =>
   console.log( `Chromium is already downloaded` );
 
   return res;
-})
+});

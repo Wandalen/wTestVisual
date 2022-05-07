@@ -3,8 +3,7 @@
 
 'use strict';
 
-const _global = _global_;
-const _ = _global_.wTools;
+const _ = _globals_.testing.wTools;
 _.test = _.test || Object.create( null );
 _.test.visual = _.test.visual || Object.create( null );
 _.test.visual.browserstack = _.test.visual.browserstack || Object.create( null );

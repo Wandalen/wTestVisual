@@ -4,6 +4,7 @@
 'use strict';
 
 require( 'wTesting' );
+require( 'wTestVisual' );
 var Puppeteer = require( 'puppeteer' );
 
 let _ = _realGlobal_._globals_.testing.wTools
@@ -95,7 +96,7 @@ async function waitForVisibleInViewportThrowing( test )
 
     await page.goto( 'file:///' + _.path.nativize( indexHtmlPath ), { waitUntil : 'load' } );
 
-    await _.test.waitForVisibleInViewport
+    await _.test.visual.waitForVisibleInViewport
     ({
       targetSelector : 'p',
       timeOut : 1,

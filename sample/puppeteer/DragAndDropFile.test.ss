@@ -6,6 +6,7 @@ if( typeof module !== 'undefined' )
 {
   let _ = require( 'wTools' );
   _.include( 'wTesting' );
+  _.include( 'wTestVisual' );
 
   var Puppeteer = require( 'puppeteer' );
 }
@@ -97,7 +98,7 @@ async function fileDragAndDropWithHelper( test )
 
   await page.goto( 'file:///' + _.path.nativize( indexHtmlPath ), { waitUntil : 'load' } );
 
-  await _.test.fileDrop
+  await _.test.visual.fileDrop
   ({
     filePath : [ __filename ],
     targetSelector : '#dropzone',

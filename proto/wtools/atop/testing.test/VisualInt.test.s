@@ -7,6 +7,7 @@ if( typeof module !== 'undefined' )
 {
 
   const _ = require( '../../../node_modules/Tools' );
+  _.include( 'wTesting' );
 
   if( typeof _realGlobal_ === 'undefined' || !_realGlobal_.wTester || !_realGlobal_.wTester._isReal_ )
   require( '../testing/entry/Visual.s' );
