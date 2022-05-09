@@ -6,7 +6,7 @@ about:
     colorful report, verbosity control and more. Use the module to get free of
     routines which can be automated.
   version: 1.1.0
-  enabled: 1
+  enabled: 0
   license: MIT
   npm.name: wtestvisual
   npm.bin:
