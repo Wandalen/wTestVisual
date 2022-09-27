@@ -5,7 +5,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( 'wTools' );
-  _.include( 'wTesting' );
+  _.include( 'wTestVisual' );
 
   var Puppeteer = require( 'puppeteer' );
 }
@@ -50,7 +50,7 @@ async function waitForVisibleInViewport( test )
   let page = await browser.newPage();
 
   await page.goto( 'file:///' + _.path.nativize( indexHtmlPath ), { waitUntil : 'load' } );
-  await _.test.waitForVisibleInViewport
+  await _.test.visual.waitForVisibleInViewport
   ({
     library : 'puppeteer',
     page,

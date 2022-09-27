@@ -467,47 +467,11 @@ step:
       content: prime
       debug: release
 submodule:
-  wTools:
-    path: 'npm:///wTools'
+  wTesting:
+    path: 'npm:///wTesting'
     enabled: 0
-  wProto:
-    path: 'npm:///wProto'
-    enabled: 0
-  wcommandsaggregator:
-    path: 'npm:///wcommandsaggregator'
-    enabled: 0
-  wselector:
-    path: 'npm:///wselector'
-    enabled: 0
-  wprocesswatcher:
-    path: 'npm:///wprocesswatcher'
-    enabled: 0
-  wprocess:
-    path: 'npm:///wprocess'
-    enabled: 0
-  wintrospectorextra:
-    path: 'npm:///wintrospectorextra'
-    enabled: 0
-  wlooker:
-    path: 'npm:///wlooker'
-    enabled: 0
-  winstancing:
-    path: 'npm:///winstancing'
-    enabled: 0
-  wequaler:
-    path: 'npm:///wequaler'
-    enabled: 0
-  wCopyable:
-    path: 'npm:///wCopyable'
-    enabled: 0
-  wLogger:
-    path: 'npm:///wLogger'
-    enabled: 0
-  wConsequence:
-    path: 'npm:///wConsequence'
-    enabled: 0
-  wFiles:
-    path: 'npm:///wFiles'
+  wpuppet:
+    path: 'npm:///wpuppet'
     enabled: 0
   browserstack-local:
     path: 'npm:///browserstack-local#1.4.8'
@@ -515,11 +479,6 @@ submodule:
   needle:
     path: 'npm:///needle#2.9.1'
     enabled: 0
-  wEventHandler:
-    path: 'npm:///wEventHandler'
-    enabled: 0
-    criterion:
-      optional: 1
   wstarter:
     path: 'npm:///wstarter'
     enabled: 0

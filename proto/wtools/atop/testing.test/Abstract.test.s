@@ -10,7 +10,6 @@ if( typeof module !== 'undefined' )
   _.include( 'wProcess' );
   _.include( 'wFiles' );
   _.include( 'wConsequence' );
-  _.include( 'wTesting' );
 }
 
 const _global = _global_;
@@ -59,7 +58,10 @@ async function bsBegin()
   if( !self.remoteTesting )
   return false;
 
-  self.bsLocal = await _.test.visual.browserstack.localBegin( process.env.BROWSERSTACK_KEY );
+  if( _.process.insideTestContainer() )
+  return false;
+
+  self.bsLocal = await __.test.visual.browserstack.localBegin( process.env.PRIVATE_BROWSERSTACK_KEY );
   return null;
 
 }
@@ -72,7 +74,11 @@ function bsEnd()
 
   if( !self.remoteTesting )
   return false;
-  return _.test.visual.browserstack.localEnd( self.bsLocal );
+
+  if( _.process.insideTestContainer() )
+  return false;
+
+  return __.test.visual.browserstack.localEnd( self.bsLocal );
 }
 
 //
@@ -83,14 +89,18 @@ async function bsStatusUpdate( tro )
 
   if( !context.remoteTesting )
   return;
+
+  if( _.process.insideTestContainer() )
+  return;
+
   if( !context.bsSession )
   return
 
-  return _.test.visual.browserstack.sessionStatusSet
+  return __.test.visual.browserstack.sessionStatusSet
   ({
     sid : context.bsSession,
-    user : process.env.BROWSERSTACK_USER,
-    key : process.env.BROWSERSTACK_KEY,
+    user : process.env.PRIVATE_BROWSERSTACK_USER,
+    key : process.env.PRIVATE_BROWSERSTACK_KEY,
     tro
   })
 }
@@ -156,15 +166,15 @@ function assetFor( test, assetName )
   let context = this;
   let routinePath = __.path.join( context.suiteTempPath, test.name );
 
-  let a = _.test.visual.assetFor
+  let a = __.test.visual.assetFor
   ({
     test,
     assetName,
     routinePath,
     browserDimensions : [ 800, 600 ],
-    browserStackEnabled : context.remoteTesting,
-    browserStackUser : process.env.BROWSERSTACK_USER,
-    browserStackAccessKey : process.env.BROWSERSTACK_KEY,
+    browserStackEnabled : context.remoteTesting && !_.process.insideTestContainer(),
+    browserStackUser : process.env.PRIVATE_BROWSERSTACK_USER,
+    browserStackAccessKey : process.env.PRIVATE_BROWSERSTACK_KEY,
     browserStackIdleTimeoutInSec : 30,
     browserStackConfigs : context.remoteConfig,
   });
