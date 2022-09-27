@@ -5,7 +5,6 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( 'wTools' );
-  _.include( 'wTesting' );
   _.include( 'wTestVisual' );
 
   var Puppeteer = require( 'puppeteer' );

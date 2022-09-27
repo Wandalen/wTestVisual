@@ -4,8 +4,7 @@ if( typeof module !== 'undefined' )
   const _ = require( 'wTools' );
   try
   {
-    _.include( 'wTesting' );
-    _.include( 'wtestvisual' );
+    _.include( 'wTestVisual' );
   }
   catch( err )
   {
