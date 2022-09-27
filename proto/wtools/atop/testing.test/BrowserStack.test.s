@@ -104,7 +104,7 @@ function throwSyncError( test )
   const a = context.assetFor( test, 'browserstack' );
   a.reflect();
 
-  if( _.process.insideTestContainer || !context.remoteTesting )
+  if( _.process.insideTestContainer() || !context.remoteTesting )
   return test.true( true );
 
   /* - */
@@ -112,7 +112,7 @@ function throwSyncError( test )
   const o =
   {
     execPath : `.context remoteTesting:1 .run ./ r:throwSyncError v:7`,
-    outputPiping : 0,
+    outputPiping : 1,
   };
   a.appStartNonThrowing( o );
 
@@ -136,7 +136,7 @@ function throwSyncError( test )
   return a.ready;
 }
 
-throwSyncError.timeOut = 120000;
+throwSyncError.timeOut = 240000;
 
 //
 

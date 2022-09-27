@@ -26,7 +26,7 @@ function throwSyncError( test )
   });
 }
 
-throwSyncError.timeOut = 90000;
+throwSyncError.timeOut = 180000;
 
 //
 
