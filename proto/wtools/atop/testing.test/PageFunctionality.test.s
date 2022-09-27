@@ -156,7 +156,7 @@ function waitForFunction( test )
     {
       return page.waitForFunction( () => new Promise( ( resolve, reject ) =>
       {
-        setTimeout( () => resolve( true ), 3000 );
+        setTimeout( () => resolve( true ), 100000 );
       }), { timeout : 1000 } );
     });
 
@@ -168,7 +168,7 @@ function waitForFunction( test )
   });
 }
 
-waitForFunction.timeOut = 60000;
+waitForFunction.timeOut = 120000;
 
 //
 

@@ -7,16 +7,12 @@ let Puppeteer;
 
 if( typeof module !== 'undefined' )
 {
-  const _ = require( 'Tools' );
-
-  _.include( 'wTesting' );
-  _.include( 'wFiles' );
-
+  require( '../testing/entry/Visual.s' );
   Puppeteer = require( 'puppeteer' );
 }
 
 const _global = _global_;
-const _ = _global_.wTools;
+const _ = _global.wTools;
 const __ = _globals_.testing.wTools;
 
 // --
