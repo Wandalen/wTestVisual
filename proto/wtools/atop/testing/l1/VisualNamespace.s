@@ -1,4 +1,4 @@
-( function _Namespace_s_()
+( function _VisualNamespace_s_()
 {
 
 'use strict';
