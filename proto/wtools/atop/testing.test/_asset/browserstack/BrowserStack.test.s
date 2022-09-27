@@ -30,6 +30,23 @@ throwSyncError.timeOut = 180000;
 
 //
 
+function throwAsyncError( test )
+{
+  const context = this;
+  const a = context.assetFor( test );
+  a.entryPath = 'trivial/Setup.html';
+
+  return a.inBrowser( async ( page ) =>
+  {
+    let con = new _.Consequence();
+    return con.error( _.error.brief( 'Async error' ) );
+  });
+}
+
+throwAsyncError.timeOut = 180000;
+
+//
+
 let Suite =
 {
   name : 'Browserstack',
@@ -39,6 +56,7 @@ let Suite =
   tests :
   {
     throwSyncError,
+    throwAsyncError,
   }
 }
 
