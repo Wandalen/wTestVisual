@@ -86,18 +86,20 @@ async function bsStatusUpdate( tro )
   if( !context.bsSession )
   return
 
-  return _.test.visual.browserstack.sessionStatusSet
+  let ready = _.test.visual.browserstack.sessionStatusSet
   ({
     sid : context.bsSession,
     user : process.env.PRIVATE_BROWSERSTACK_USER,
     key : process.env.PRIVATE_BROWSERSTACK_KEY,
     tro
-  })
-  .then( ( responses ) =>
+  });
+  if( process.send !== undefined )
+  return ready.then( ( responses ) =>
   {
     process.send( responses[ 1 ].body.automation_session );
     return null;
   });
+  return ready;
 }
 
 //
