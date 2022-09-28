@@ -21,6 +21,14 @@ function throwSyncError( test )
 
 //
 
+function throwAsyncError( test )
+{
+  let con = new _.Consequence();
+  return con.error( _.error.brief( 'Async error' ) );
+}
+
+//
+
 function browserThrowSyncError( test )
 {
   const context = this;
@@ -63,6 +71,7 @@ let Suite =
   tests :
   {
     throwSyncError,
+    throwAsyncError,
 
     browserThrowSyncError,
     browserThrowAsyncError,

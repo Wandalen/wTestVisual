@@ -121,6 +121,7 @@ function routineThrowSyncError( test )
 
   o.pnd.on( 'message', ( response ) =>
   {
+    test.case = 'unrechable check';
     test.identical( false, true );
   });
 
@@ -137,6 +138,46 @@ function routineThrowSyncError( test )
 }
 
 routineThrowSyncError.timeOut = 60000;
+
+//
+
+function routineThrowAsyncError( test )
+{
+  const context = this;
+  const a = context.assetFor( test, 'browserstack' );
+  a.reflect();
+
+  if( _.process.insideTestContainer() || !context.remoteTesting )
+  return test.true( true );
+
+  /* - */
+
+  const o =
+  {
+    execPath : `.context remoteTesting:1 .run ./ r:throwAsyncError v:7`,
+    outputPiping : 1,
+  };
+  a.appStartNonThrowing( o );
+
+  o.pnd.on( 'message', ( response ) =>
+  {
+    test.case = 'unrechable check';
+    test.identical( false, true );
+  });
+
+  a.ready.then( ( op ) =>
+  {
+    test.notIdentical( op.exitCode, 0 );
+    test.identical( _.strCount( op.output, 'Async error' ), 1 );
+    return null;
+  });
+
+  /* - */
+
+  return a.ready;
+}
+
+routineThrowAsyncError.timeOut = 60000;
 
 //
 
@@ -247,6 +288,7 @@ let Suite =
   tests :
   {
     routineThrowSyncError,
+    routineThrowAsyncError,
 
     browserThrowSyncError,
     browserThrowAsyncError,
