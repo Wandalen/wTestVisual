@@ -304,6 +304,46 @@ browserTimeout.timeOut = 240000;
 
 //
 
+function routineTimeout( test )
+{
+  const context = this;
+  const a = context.assetFor( test, 'browserstack' );
+  a.reflect();
+
+  if( _.process.insideTestContainer() || !context.remoteTesting )
+  return test.true( true );
+
+  /* - */
+
+  const o =
+  {
+    execPath : `.context remoteTesting:1 .run ./ r:routineTimeout v:7`,
+    outputPiping : 1,
+  };
+  a.appStartNonThrowing( o );
+
+  o.pnd.on( 'message', ( response ) =>
+  {
+    test.case = 'unrechable check';
+    test.identical( response.reason, 'test routine time limit' );
+  });
+
+  a.ready.then( ( op ) =>
+  {
+    test.notIdentical( op.exitCode, 0 );
+    test.identical( _.strCount( op.output, 'Failed ( test routine time limit )' ), 1 );
+    return null;
+  });
+
+  /* - */
+
+  return a.ready;
+}
+
+routineTimeout.timeOut = 60000;
+
+//
+
 let Suite =
 {
   name : 'Tools.TestVisual.Browserstack',
@@ -332,6 +372,7 @@ let Suite =
     browserThrowSyncError,
     browserThrowAsyncError,
 
+    routineTimeout,
     browserTimeout,
   }
 }

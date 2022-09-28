@@ -62,6 +62,22 @@ browserThrowAsyncError.timeOut = 180000;
 
 //
 
+function routineTimeout( test )
+{
+  const context = this;
+  const a = context.assetFor( test );
+  a.entryPath = 'trivial/Setup.html';
+
+  return a.inBrowser( async ( page ) =>
+  {
+    return new _.Consequence();
+  });
+}
+
+routineTimeout.timeOut = 2000;
+
+//
+
 function browserTimeout( test )
 {
   const context = this;
@@ -92,6 +108,7 @@ let Suite =
     browserThrowSyncError,
     browserThrowAsyncError,
 
+    routineTimeout,
     browserTimeout,
   }
 }
