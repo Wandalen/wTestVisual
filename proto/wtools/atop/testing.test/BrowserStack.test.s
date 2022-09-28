@@ -385,6 +385,47 @@ invalidDevice.timeOut = 240000;
 
 //
 
+function invalidDeviceFormat( test )
+{
+  const context = this;
+  const a = context.assetFor( test, 'invalidDeviceFormat' );
+  a.reflect();
+
+  if( _.process.insideTestContainer() || !context.remoteTesting )
+  return test.true( true );
+
+  /* - */
+
+  const o =
+  {
+    execPath : `.context remoteTesting:1 .run ./`,
+    outputPiping : 1,
+  };
+  a.appStartNonThrowing( o );
+
+  o.pnd.on( 'message', ( response ) =>
+  {
+    test.case = 'unrechable check';
+    test.identical( false, true );
+  });
+
+  a.ready.then( ( op ) =>
+  {
+    test.notIdentical( op.exitCode, 0 );
+    test.identical( _.strCount( op.output, 'Failed to create session.' ), 1 );
+    test.identical( _.strCount( op.output, 'Could not find device: Samsung: Galaxy S20' ), 1 );
+    return null;
+  });
+
+  /* - */
+
+  return a.ready;
+}
+
+invalidDeviceFormat.timeOut = 240000;
+
+//
+
 let Suite =
 {
   name : 'Tools.TestVisual.Browserstack',
@@ -417,6 +458,7 @@ let Suite =
     browserTimeout,
 
     invalidDevice,
+    invalidDeviceFormat,
   }
 }
 
