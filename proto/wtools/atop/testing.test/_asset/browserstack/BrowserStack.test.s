@@ -14,7 +14,7 @@ _.assert( !!Parent );
 
 //
 
-function throwSyncError( test )
+function browserThrowSyncError( test )
 {
   const context = this;
   const a = context.assetFor( test );
@@ -26,11 +26,11 @@ function throwSyncError( test )
   });
 }
 
-throwSyncError.timeOut = 180000;
+browserThrowSyncError.timeOut = 180000;
 
 //
 
-function throwAsyncError( test )
+function browserThrowAsyncError( test )
 {
   const context = this;
   const a = context.assetFor( test );
@@ -43,7 +43,7 @@ function throwAsyncError( test )
   });
 }
 
-throwAsyncError.timeOut = 180000;
+browserThrowAsyncError.timeOut = 180000;
 
 //
 
@@ -55,8 +55,8 @@ let Suite =
 
   tests :
   {
-    throwSyncError,
-    throwAsyncError,
+    browserThrowSyncError,
+    browserThrowAsyncError,
   }
 }
 

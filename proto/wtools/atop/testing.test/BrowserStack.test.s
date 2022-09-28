@@ -80,8 +80,11 @@ function assetFor( test, asset )
     {
       if( !_.longHasAny( [ 'js', 's', 'ts' ], r.dst.ext ) )
       return;
-      var read = a.fileProvider.fileRead( r.dst.absolute );
-      read = _.strReplace( read, `Abstract.test.s`, `${ _.path.join( __dirname, 'Abstract.test.s' ) }` );
+      let read = a.fileProvider.fileRead( r.dst.absolute );
+      let path = _.path.nativize( _.path.join( __dirname, 'Abstract.test.s' ) );
+      if( process.platform === 'win32' )
+      path = _.str.replace( path, '\\', '\\\\' );
+      read = _.strReplace( read, `Abstract.test.s`, path );
       a.fileProvider.fileWrite( r.dst.absolute, read );
     });
   }
@@ -98,7 +101,7 @@ function assetFor( test, asset )
 
 //
 
-function throwSyncError( test )
+function browserThrowSyncError( test )
 {
   const context = this;
   const a = context.assetFor( test, 'browserstack' );
@@ -111,7 +114,7 @@ function throwSyncError( test )
 
   const o =
   {
-    execPath : `.context remoteTesting:1 .run ./ r:throwSyncError v:7`,
+    execPath : `.context remoteTesting:1 .run ./ r:browserThrowSyncError v:7`,
     outputPiping : 1,
   };
   a.appStartNonThrowing( o );
@@ -119,7 +122,7 @@ function throwSyncError( test )
   o.pnd.on( 'message', ( response ) =>
   {
 
-    test.identical( response.build_name, 'throwSyncError' );
+    test.identical( response.build_name, 'browserThrowSyncError' );
     test.identical( response.status, 'failed' );
     test.identical( response.reason, 'throwing error' );
   });
@@ -136,11 +139,11 @@ function throwSyncError( test )
   return a.ready;
 }
 
-throwSyncError.timeOut = 240000;
+browserThrowSyncError.timeOut = 240000;
 
 //
 
-function throwAsyncError( test )
+function browserThrowAsyncError( test )
 {
   const context = this;
   const a = context.assetFor( test, 'browserstack' );
@@ -153,7 +156,7 @@ function throwAsyncError( test )
 
   const o =
   {
-    execPath : `.context remoteTesting:1 .run ./ r:throwAsyncError v:7`,
+    execPath : `.context remoteTesting:1 .run ./ r:browserThrowAsyncError v:7`,
     outputPiping : 1,
   };
   a.appStartNonThrowing( o );
@@ -161,7 +164,7 @@ function throwAsyncError( test )
   o.pnd.on( 'message', ( response ) =>
   {
 
-    test.identical( response.build_name, 'throwAsyncError' );
+    test.identical( response.build_name, 'browserThrowAsyncError' );
     test.identical( response.status, 'failed' );
     test.identical( response.reason, 'throwing error' );
   });
@@ -178,7 +181,7 @@ function throwAsyncError( test )
   return a.ready;
 }
 
-throwAsyncError.timeOut = 240000;
+browserThrowAsyncError.timeOut = 240000;
 
 //
 
@@ -204,8 +207,8 @@ let Suite =
 
   tests :
   {
-    throwSyncError,
-    throwAsyncError,
+    browserThrowSyncError,
+    browserThrowAsyncError,
   }
 }
 
