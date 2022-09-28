@@ -62,6 +62,22 @@ browserThrowAsyncError.timeOut = 180000;
 
 //
 
+function browserTimeout( test )
+{
+  const context = this;
+  const a = context.assetFor( test );
+  a.entryPath = 'trivial/Setup.html';
+
+  return a.inBrowser( async ( page ) =>
+  {
+    return new _.Consequence();
+  });
+}
+
+browserTimeout.timeOut = 60000;
+
+//
+
 let Suite =
 {
   name : 'Browserstack',
@@ -75,6 +91,8 @@ let Suite =
 
     browserThrowSyncError,
     browserThrowAsyncError,
+
+    browserTimeout,
   }
 }
 

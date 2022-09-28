@@ -201,7 +201,6 @@ function browserThrowSyncError( test )
 
   o.pnd.on( 'message', ( response ) =>
   {
-
     test.identical( response.build_name, 'browserThrowSyncError' );
     test.identical( response.status, 'failed' );
     test.identical( response.reason, 'throwing error' );
@@ -243,7 +242,6 @@ function browserThrowAsyncError( test )
 
   o.pnd.on( 'message', ( response ) =>
   {
-
     test.identical( response.build_name, 'browserThrowAsyncError' );
     test.identical( response.status, 'failed' );
     test.identical( response.reason, 'throwing error' );
@@ -262,6 +260,47 @@ function browserThrowAsyncError( test )
 }
 
 browserThrowAsyncError.timeOut = 240000;
+
+//
+
+function browserTimeout( test )
+{
+  const context = this;
+  const a = context.assetFor( test, 'browserstack' );
+  a.reflect();
+
+  if( _.process.insideTestContainer() || !context.remoteTesting )
+  return test.true( true );
+
+  /* - */
+
+  const o =
+  {
+    execPath : `.context remoteTesting:1 .run ./ r:browserTimeout v:7`,
+    outputPiping : 1,
+  };
+  a.appStartNonThrowing( o );
+
+  o.pnd.on( 'message', ( response ) =>
+  {
+    test.identical( response.build_name, 'browserTimeout' );
+    test.identical( response.status, 'failed' );
+    test.identical( response.reason, 'test routine time limit' );
+  });
+
+  a.ready.then( ( op ) =>
+  {
+    test.notIdentical( op.exitCode, 0 );
+    test.identical( _.strCount( op.output, 'Failed ( test routine time limit )' ), 1 );
+    return null;
+  });
+
+  /* - */
+
+  return a.ready;
+}
+
+browserTimeout.timeOut = 240000;
 
 //
 
@@ -292,6 +331,8 @@ let Suite =
 
     browserThrowSyncError,
     browserThrowAsyncError,
+
+    browserTimeout,
   }
 }
 
