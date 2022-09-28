@@ -14,6 +14,13 @@ _.assert( !!Parent );
 
 //
 
+function throwSyncError( test )
+{
+  throw _.error.brief( 'Sync error' );
+}
+
+//
+
 function browserThrowSyncError( test )
 {
   const context = this;
@@ -55,6 +62,8 @@ let Suite =
 
   tests :
   {
+    throwSyncError,
+
     browserThrowSyncError,
     browserThrowAsyncError,
   }
