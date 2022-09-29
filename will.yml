@@ -139,7 +139,7 @@ path:
   repository: 'git+https:///github.com/Wandalen/wTestVisual.git'
   origins:
     - 'git+https:///github.com/Wandalen/wTestVisual.git'
-    - 'npm:///wTestVisual'
+    - 'npm:///wtestvisual'
   bugtracker: 'https:///github.com/Wandalen/wTestVisual/issues'
   in: .
   out: out
