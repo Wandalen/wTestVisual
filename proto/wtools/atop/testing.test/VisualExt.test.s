@@ -5,11 +5,9 @@
 
 if( typeof module !== 'undefined' )
 {
-  const _ = require( '../../../node_modules/Tools' );
+  const _ = require( 'Tools' );
   require( '../testing/entry/Visual.s' );
-  _.include( 'wProcess' );
-  _.include( 'wFiles' );
-  _.include( 'wConsequence' );
+  _.include( 'wTesting' );
 }
 
 const _global = _global_;
@@ -106,16 +104,38 @@ function assetFor( test, asset )
 
 }
 
+//
+
+async function browserDownload( test )
+{
+  test.case = 'download chromium, should be already downloaded';
+  var got = await _.test.visual.puppeteer.browserDownload();
+  test.identical( got, null );
+
+  test.case = 'download firefox';
+  var got = await _.test.visual.puppeteer.browserDownload( 'firefox' );
+  if( !got )
+  test.identical( got, null );
+  else
+  test.identical( got, '108.0a1' );
+
+  /* - */
+
+  if( !Config.debug )
+  return;
+
+  test.case = 'wrong name of browser';
+  test.shouldThrowErrorSync( () => _.test.visual.puppeteer.browserDownload( 'edge' ) );
+}
+
 // --
 // suite
 // --
 
 const Proto =
 {
-
   name : 'Tools.TestVisual.Ext',
   silencing : 1,
-  enabled : 0,
 
   onSuiteBegin,
   onSuiteEnd,
@@ -138,8 +158,8 @@ const Proto =
 
   tests :
   {
+    browserDownload,
   }
-
 }
 
 //
