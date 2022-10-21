@@ -13,16 +13,22 @@ let Puppeteer, PuppeteerRevisions;
 
 //
 
-function chromiumDownload()
+function browserDownload( browser )
 {
+  browser = browser ? browser : 'chromium';
+  _.assert( [ 'chromium', 'firefox' ].includes( browser ), 'Unknown browser : ', browser );
+  let product = browser === 'chromium' ? 'chrome' : browser;
   if( !Puppeteer )
   {
     Puppeteer = require( 'puppeteer' );
     PuppeteerRevisions = require( 'puppeteer/lib/cjs/puppeteer/revisions.js' );
   }
 
-  let browserFetcher = Puppeteer.createBrowserFetcher();
-  let targetRevision = PuppeteerRevisions.PUPPETEER_REVISIONS.chromium;
+  let browserFetcher = Puppeteer.createBrowserFetcher({ product });
+  /* see the differences for forming versions in puppeteer/lib/cjs/puppeteer/revisions.js and puppeteer/lib/cjs/puppeteer/node/install.js */
+  /* the main difference is in obtaining versions, it is routine getFirefoxNightlyVersion and hardcoded version in PuppeteerRevisions.PUPPETEER_REVISIONS */
+  /* the version of chromium is also hardcoded in PuppeteerRevisions.PUPPETEER_REVISIONS */
+  let targetRevision = product === 'firefox' ? '108.0a1' : PuppeteerRevisions.PUPPETEER_REVISIONS[ browser ];
   let ready = _.Consequence.From( browserFetcher.localRevisions() );
 
   ready.then( ( localRevisions ) =>
@@ -30,7 +36,7 @@ function chromiumDownload()
     if( _.longHas( localRevisions, targetRevision ) )
     return null;
     return _.Consequence.From( browserFetcher.download( targetRevision ) ).then( () => targetRevision );
-  })
+  });
 
   return ready;
 }
@@ -39,7 +45,7 @@ function chromiumDownload()
 
 let Extension =
 {
-  chromiumDownload
+  browserDownload,
 }
 
 
