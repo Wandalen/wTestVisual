@@ -25,12 +25,12 @@ function browserDownload( browser )
   }
 
   let browserFetcher = Puppeteer.createBrowserFetcher({ product });
-  /* see the differences for forming versions in puppeteer/lib/cjs/puppeteer/revisions.js and puppeteer/lib/cjs/puppeteer/node/install.js */
-  /* the main difference is in obtaining versions, it is routine getFirefoxNightlyVersion and hardcoded version in PuppeteerRevisions.PUPPETEER_REVISIONS */
-  /* the version of chromium is also hardcoded in PuppeteerRevisions.PUPPETEER_REVISIONS */
-  let targetRevision = product === 'firefox' ? '108.0a1' : PuppeteerRevisions.PUPPETEER_REVISIONS[ browser ];
-  let ready = _.Consequence.From( browserFetcher.localRevisions() );
+  let targetRevision = PuppeteerRevisions.PUPPETEER_REVISIONS[ browser ];
 
+  let ready = _.take( null );
+  if( browser === 'firefox' )
+  ready = firefoxTargetRevisionSet();
+  ready.then( () => browserFetcher.localRevisions() );
   ready.then( ( localRevisions ) =>
   {
     if( _.longHas( localRevisions, targetRevision ) )
@@ -39,6 +39,17 @@ function browserDownload( browser )
   });
 
   return ready;
+
+  function firefoxTargetRevisionSet()
+  {
+    return _.http.retrieve( 'https://product-details.mozilla.org/1.0/firefox_versions.json' )
+    .then( ( res ) =>
+    {
+      const versionsInfo = res.response.body;
+      targetRevision = versionsInfo.FIREFOX_NIGHTLY;
+      return null;
+    });
+  }
 }
 
 //

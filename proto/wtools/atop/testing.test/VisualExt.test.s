@@ -110,14 +110,17 @@ async function browserDownload( test )
 {
   test.case = 'download chromium, should be already downloaded';
   var got = await _.test.visual.puppeteer.browserDownload();
+  if( !got )
   test.identical( got, null );
+  else
+  test.true( _.str.is( got ) );
 
   test.case = 'download firefox';
   var got = await _.test.visual.puppeteer.browserDownload( 'firefox' );
   if( !got )
   test.identical( got, null );
   else
-  test.identical( got, '108.0a1' );
+  test.true( _.str.is( got ) );
 
   /* - */
 
