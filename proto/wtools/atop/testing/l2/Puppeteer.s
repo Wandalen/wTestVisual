@@ -13,33 +13,50 @@ let Puppeteer, PuppeteerRevisions;
 
 //
 
-function chromiumDownload()
+function browserDownload( browser )
 {
+  browser = browser ? browser : 'chromium';
+  _.assert( [ 'chromium', 'firefox' ].includes( browser ), 'Unknown browser : ', browser );
+  let product = browser === 'chromium' ? 'chrome' : browser;
   if( !Puppeteer )
   {
     Puppeteer = require( 'puppeteer' );
     PuppeteerRevisions = require( 'puppeteer/lib/cjs/puppeteer/revisions.js' );
   }
 
-  let browserFetcher = Puppeteer.createBrowserFetcher();
-  let targetRevision = PuppeteerRevisions.PUPPETEER_REVISIONS.chromium;
-  let ready = _.Consequence.From( browserFetcher.localRevisions() );
+  let browserFetcher = Puppeteer.createBrowserFetcher({ product });
+  let targetRevision = PuppeteerRevisions.PUPPETEER_REVISIONS[ browser ];
 
+  let ready = _.take( null );
+  if( browser === 'firefox' )
+  ready = firefoxTargetRevisionSet();
+  ready.then( () => browserFetcher.localRevisions() );
   ready.then( ( localRevisions ) =>
   {
     if( _.longHas( localRevisions, targetRevision ) )
     return null;
     return _.Consequence.From( browserFetcher.download( targetRevision ) ).then( () => targetRevision );
-  })
+  });
 
   return ready;
+
+  function firefoxTargetRevisionSet()
+  {
+    return _.http.retrieve( 'https://product-details.mozilla.org/1.0/firefox_versions.json' )
+    .then( ( res ) =>
+    {
+      const versionsInfo = res.response.body;
+      targetRevision = versionsInfo.FIREFOX_NIGHTLY;
+      return null;
+    });
+  }
 }
 
 //
 
 let Extension =
 {
-  chromiumDownload
+  browserDownload,
 }
 
 
