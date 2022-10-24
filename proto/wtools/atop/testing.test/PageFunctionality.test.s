@@ -83,7 +83,7 @@ async function evaluate( test )
   });
 }
 
-evaluate.timeOut = 60000;
+evaluate.timeOut = 180000;
 
 //
 
@@ -125,7 +125,7 @@ function waitForFunction( test )
   });
 }
 
-waitForFunction.timeOut = 60000;
+waitForFunction.timeOut = 180000;
 
 //
 
