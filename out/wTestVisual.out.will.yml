@@ -3,7 +3,7 @@ root:
   - wTestVisual.out
 consistency:
   ../will.yml: &ref_0
-    hash: 53e84fed13fb76029f69f7016590c871
+    hash: 36520376a066fcc067d16a1c7d91787d
     size: 13460
 module:
   wTestVisual.out:
@@ -72,7 +72,7 @@ module:
       origins:
         path:
           - 'git+https:///github.com/Wandalen/wTestVisual.git'
-          - 'npm:///wTestVisual'
+          - 'npm:///wtestvisual'
       bugtracker:
         path: 'https:///github.com/Wandalen/wTestVisual/issues'
       in:
@@ -197,11 +197,21 @@ module:
           - ../proto/wtools/atop/testing/l3/VisualAssetFor.s
           - ../proto/wtools/atop/testing.test
           - ../proto/wtools/atop/testing.test/Abstract.test.s
+          - ../proto/wtools/atop/testing.test/BrowserStack.test.s
           - ../proto/wtools/atop/testing.test/PageFunctionality.test.s
           - ../proto/wtools/atop/testing.test/Puppeteer.test.s
           - ../proto/wtools/atop/testing.test/VisualExt.test.s
           - ../proto/wtools/atop/testing.test/VisualInt.test.s
           - ../proto/wtools/atop/testing.test/_asset
+          - ../proto/wtools/atop/testing.test/_asset/browserstack
+          - >-
+            ../proto/wtools/atop/testing.test/_asset/browserstack/BrowserStack.test.s
+          - ../proto/wtools/atop/testing.test/_asset/invalidDevice
+          - >-
+            ../proto/wtools/atop/testing.test/_asset/invalidDevice/InvalidDevice.test.s
+          - ../proto/wtools/atop/testing.test/_asset/invalidDeviceFormat
+          - >-
+            ../proto/wtools/atop/testing.test/_asset/invalidDeviceFormat/InvalidDeviceFormat.test.s
           - ../proto/wtools/atop/testing.test/_asset/puppeteer
           - ../proto/wtools/atop/testing.test/_asset/puppeteer/index.html
           - ../proto/wtools/atop/testing.test/_asset/puppeteer/Puppeteer.test.s
@@ -1187,7 +1197,7 @@ module:
       origins:
         path:
           - 'git+https:///github.com/Wandalen/wTestVisual.git'
-          - 'npm:///wTestVisual'
+          - 'npm:///wtestvisual'
       bugtracker:
         path: 'https:///github.com/Wandalen/wTestVisual/issues'
       in:
@@ -2124,5 +2134,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: 53e84fed13fb76029f69f7016590c871
+        hash: 36520376a066fcc067d16a1c7d91787d
         size: 13460

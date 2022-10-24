@@ -1,6 +1,6 @@
 {
   "name": "wtestvisual",
-  "version": "1.0.583",
+  "version": "1.0.584",
   "engine": "node >= 10.0.0",
   "description": "Framework for convenient visual testing. Extends Testing.",
   "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
@@ -38,29 +38,29 @@
     "url": "https://github.com/Wandalen/wTestVisual/issues"
   },
   "dependencies": {
-    "wTools": "alpha",
-    "wselector": "alpha",
-    "wpuppet": "alpha",
-    "wProto": "alpha",
-    "wprocesswatcher": "alpha",
-    "wprocess": "alpha",
-    "wlooker": "alpha",
-    "wLogger": "alpha",
-    "wintrospectorextra": "alpha",
-    "winstancing": "alpha",
-    "wFiles": "alpha",
-    "wequaler": "alpha",
-    "wCopyable": "alpha",
-    "wConsequence": "alpha",
+    "wTools": "latest",
+    "wselector": "latest",
+    "wpuppet": "latest",
+    "wProto": "latest",
+    "wprocesswatcher": "latest",
+    "wprocess": "latest",
+    "wlooker": "latest",
+    "wLogger": "latest",
+    "wintrospectorextra": "latest",
+    "winstancing": "latest",
+    "wFiles": "latest",
+    "wequaler": "latest",
+    "wCopyable": "latest",
+    "wConsequence": "latest",
     "needle": "2.9.1",
     "browserstack-local": "1.4.8"
   },
   "optionalDependencies": {
-    "wEventHandler": "alpha"
+    "wEventHandler": "latest"
   },
   "devDependencies": {
-    "wTesting": "alpha",
-    "wstarter": "alpha",
+    "wTesting": "latest",
+    "wstarter": "latest",
     "eslint": "7.32.0"
   },
   "keywords": [
