@@ -5,7 +5,7 @@ require( 'wtestvisual' );
 let _ = _global_.wTools;
 
 //
-let ready = _.test.visual.puppeteer.chromiumDownload();
+let ready = _.test.visual.puppeteer.browserDownload();
 ready.then( ( res ) =>
 {
   if( res )
@@ -14,4 +14,4 @@ ready.then( ( res ) =>
   console.log( `Chromium is already downloaded` );
 
   return res;
-})
+});
